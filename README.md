@@ -1,24 +1,54 @@
 # 📊 Python – Text Analytics & Media Analysis 
 
 ## Description
-- In this assignment, I applied Python and text analytics techniques to analyze media content across U.S. and international news sources. The project focused on data collection, natural language processing (NLP), and visualization using histograms to uncover patterns in word usage. Through hands-on implementation, I strengthened my ability to transform unstructured text data into meaningful insights while addressing real-world business and media analysis questions .
+- In this assignment, I applied Python and text analytics techniques to analyze media content across U.S. and international news sources. The project focused on data collection, natural language processing (NLP), and visualization using histograms to uncover patterns in word usage. Through hands-on implementation, I strengthened my ability to transform unstructured text data into meaningful insights while addressing real-world business and media analysis questions.
+
+## Skills Developed 
+- Leave blank
 
 ## 📰 Question 1 – Media Article Collection
 Overview
-- For this question, I selected a single news topic covered within the last three months and scraped 10 total articles—7 from U.S.-based media channels and 3 from international outlets. Each article included the title, author(s), publication date, and full text. Non-coding scraping tools were primarily used, with Yahoo permitted as one optional coding-based source.
+- For this question, I selected a single news topic covered within the last three months and scraped 10 total articles—7 from U.S.-based media channels and 3 from international outlets. Each article included the title, author(s), publication date, and full text. Non-coding scraping tools were primarily used, with Yahoo permitted as one optional coding-based source.]
+
+<b> Part 1 - International Media Data Aggregation (CSV Processing) </b>
+Code Overview:
+- This code uses the Pandas library to read multiple CSV files from international media sources and merge them into a single dataset. The program concatenates the individual CSV files into one DataFrame, resets the index to maintain consistency, removes any redundant index columns if present, and saves the cleaned data into a new CSV file for subsequent analysis.
+  
+```python
+import pandas
+input_dataframe = pandas.concat(map(pandas.read_csv, [
+    'kcra3.csv',
+    'abc10.csv',
+    'sac_bee.csv',
+    'fox_news.csv',
+    'abc_news.csv',
+    'usa_today.csv',
+    'nbc-news (1).csv'
+]))
+input_dataframe = input_dataframe.reset_index(drop=True)
+
+if "Index" in input_dataframe.columns:
+    del input_dataframe["Index"]
+
+input_dataframe.to_csv('us_data.csv', index=True, index_label="Index")
+print("done")
+```
 
 Skills Developed –
 
-Data Collection: 
-- Learned how to gather structured data from multiple media sources using non-coding tools.
+Data Integration:
+- Learned how to combine multiple datasets from different international news sources into a single structured DataFrame for unified analysis.
 
-Source Validation: 
-- Identified reputable U.S. and international news outlets and verified article metadata.
+Index Management:
+- Practiced resetting and managing DataFrame indices to ensure the merged dataset remained organized and free of inconsistencies.
 
-Documentation & Explanation: 
-- Clearly demonstrated and explained scraping methods in a video format as required .
+Data Cleaning:
+- Identified and removed unnecessary index columns to prevent duplication and maintain data integrity.
 
-📈 Question 2 – Unigram Histograms (U.S. vs International Media)
+Data Export and Reusability:
+- Developed the ability to export processed data into a new CSV file, enabling efficient reuse in later text analytics and NLP tasks.
+
+## 📈 Question 2 – Unigram Histograms (U.S. vs International Media)
 Code Overview
 
 Using Python, I processed article text to calculate and visualize the top 10 unigrams for both U.S.-based and international news sources. Histograms were created to compare word frequency distributions between the two groups.
