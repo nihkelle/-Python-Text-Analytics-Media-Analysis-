@@ -7,7 +7,7 @@
 - Leave blank
 
 ## 📰 Question 1 – Media Article Collection
-Overview
+Question Overview
 - For this question, I selected a single news topic covered within the last three months and scraped 10 total articles—7 from U.S.-based media channels and 3 from international outlets. Each article included the title, author(s), publication date, and full text. Non-coding scraping tools were primarily used, with Yahoo permitted as one optional coding-based source.]
 
 <b> Part 1 - International Media Data Aggregation (CSV Processing) </b>
@@ -47,6 +47,8 @@ Data Cleaning:
 
 Data Export and Reusability:
 - Developed the ability to export processed data into a new CSV file, enabling efficient reuse in later text analytics and NLP tasks.
+
+<b> Part 2 - </b>
 
 ## 📈 Question 2 – Unigram Histograms (U.S. vs International Media)
 Code Overview
