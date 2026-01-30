@@ -1643,3 +1643,23 @@ plt.show()
 
 <b> Overall Learned Skills</b>
 
+<ins>Text Cleaning for Noisy Real-World Data:</ins>
+- Developed the ability to clean and normalize highly unstructured and noisy email text by removing URLs, punctuation, special characters, and inconsistent formatting commonly found in spam messages.
+
+<ins>Tokenization & Stopword Filtering:</ins>
+- Strengthened skills in breaking text into meaningful word tokens and removing common stopwords, allowing the analysis to focus on higher-value terms that are more indicative of spam behavior.
+
+<ins>N-Gram Feature Engineering:</ins>
+- Learned how to generate unigrams, bigrams, and trigrams to capture both individual spam keywords and repeated spam phrases, providing richer context than single-word analysis alone.
+
+<ins>Frequency-Based Pattern Recognition:</ins>
+- Used frequency counts to identify dominant words and phrases that commonly appear in spam emails, supporting evidence-based conclusions about why the emails are classified as spam.
+
+<ins>Data Visualization for Interpretation:</ins>
+- Translated textual frequency results into visual histograms, improving the ability to interpret and communicate patterns in spam language clearly and effectively.
+
+<ins>Foundations of Spam Detection Logic:</ins>
+- Built an understanding of how text-based features (n-grams and their frequencies) can serve as inputs for spam detection systems, including rule-based filters and future machine learning models.
+
+<ins>Analytical Explanation & Communication:</ins>
+- Developed the ability to explain how linguistic patterns in email content suggest spam characteristics, supporting clear written and video-based analysis.
