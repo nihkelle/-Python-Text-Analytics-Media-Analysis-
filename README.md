@@ -534,6 +534,138 @@ Feature Selection for Analysis:
 Comparative Media Analysis:
 - Created outputs that directly support visual and statistical comparison between U.S. and international media coverage.
 
+<b> Part 6 - International Media Unigram Visualization & N-Gram Analysis </b>
+
+Code Overview:
+- This code performs n-gram frequency analysis and visualization on international news article text stored in int_data.csv. The program first cleans and preprocesses the text by converting it to lowercase, removing URLs and irrelevant characters, and filtering out common stopwords. After tokenization, unigrams, bigrams, and trigrams are generated using NLTK and counted with the Counter class. The top 10 unigrams are then visualized using a bar chart created with Matplotlib, providing a clear graphical representation of word frequency in international media coverage.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.util import ngrams
+from collections import Counter
+import ssl
+
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('int_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else: ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+#print(text_tokens_without_stopwords)
+
+unigrams = ngrams(text_tokens_without_stopwords, 1)
+bigrams = ngrams(text_tokens_without_stopwords,2)
+trigrams = ngrams(text_tokens_without_stopwords,3)
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+
+#Draw a histogram of top 10 unigrams
+top3unigrams = mostcommonunigrams.most_common(10)
+top3unigrams_keys = []
+top3unigrams_values = []
+
+for i in range(len(top3unigrams)):
+    #print(top3unigrams[i][0][0])
+    top3unigrams_keys.append(top3unigrams[i][0][0])
+    top3unigrams_values.append(top3unigrams[i][1])
+
+#print(top3unigrams_keys)
+#print(top3unigrams_values)
+
+import matplotlib.pyplot as plt
+
+plt.bar(top3unigrams_keys, top3unigrams_values)
+plt.title("Top 10 Unigrams")
+plt.xlabel("Unigrams")
+plt.ylabel("Frequency")
+plt.show()
+```
+
+<ins> Skills Developed – </ins>
+
+End-to-End NLP Analysis:
+- Implemented a complete natural language processing workflow, from raw text cleaning to frequency analysis and visualization.
+
+N-Gram Modeling:
+- Generated unigrams, bigrams, and trigrams to capture both individual word usage and contextual phrase patterns in international news content.
+
+Data Visualization with Matplotlib:
+- Learned how to convert textual frequency data into bar charts, making abstract word patterns easier to interpret and communicate.
+
+Comparative Media Readiness:
+- Produced visual outputs that can be directly compared with U.S. media histograms to identify similarities and differences in coverage and framing.
+
+Analytical Communication:
+- Created interpretable visual evidence that supports narrative explanations in the homework video presentation.
+
 ## 🔗 Question 3 – Bigram & Trigram Analysis
 Question Overview
 - This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
@@ -553,7 +685,7 @@ Cross-Language Comparison: Identified similarities and differences between Engli
 
 Engagement Analysis: Explored potential relationships between word usage patterns and user engagement metrics such as likes or comments .
 
-📧 Question 5 – Email Spam Detection Analysis
+## 📧 Question 5 – Email Spam Detection Analysis
 Code Overview
 
 In this question, I analyzed 20 spam emails by extracting and processing both the subject lines and body text. Top unigrams, bigrams, and trigrams were calculated to identify common linguistic patterns associated with spam content.
