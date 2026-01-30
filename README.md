@@ -1230,24 +1230,106 @@ print(mostcommontrigrams.most_common(10))
 
 <b> Overall Skills Learned </b> 
 
+<ins> End-to-End NLP Workflow Design: </ins> 
+- Developed the ability to design and execute a complete natural language processing pipeline, starting from raw text extraction and cleaning through normalization, feature extraction, frequency analysis, and visualization.
+
+<ins>Text Cleaning & Standardization:</ins> 
+- Strengthened skills in preparing unstructured text for analysis by applying lowercasing, URL removal, punctuation filtering, and stopword elimination to reduce noise and improve analytical accuracy.
+
+<ins> Tokenization & Feature Engineering:</ins> 
+- Learned how to transform cleaned text into tokens and structured features (unigrams, bigrams, and trigrams) that can be quantitatively analyzed and compared across datasets.
+
+<ins> Lemmatization for Linguistic Accuracy:</ins> 
+- Applied WordNet lemmatization to convert words into meaningful dictionary base forms, improving interpretability and reducing redundancy in phrase-level analysis.
+
+<ins> Stemming for Aggressive Normalization:</ins> 
+- Implemented stemming techniques to observe how reducing words to root forms impacts frequency counts and phrase readability, enabling direct comparison with lemmatized results.
+
+<ins> Comparative Method Analysis (Stemming vs. Lemmatization):</ins> 
+- Developed a conceptual understanding of the tradeoffs between stemming and lemmatization, including differences in linguistic accuracy, interpretability, and analytical outcomes.
+
+<ins> Cross-Regional Media Analysis:</ins> 
+- Applied consistent preprocessing and n-gram techniques to both U.S. and international media datasets, ensuring fair and meaningful cross-regional comparisons.
+
+<ins> Frequency Analysis & Pattern Discovery:</ins> 
+- Used frequency-based methods to identify dominant words and phrases, supporting insights into topic emphasis and narrative framing across media sources.
+
+<ins> Data Visualization & Communication:</ins> 
+- Learned how to translate textual frequency data into visual histograms using Matplotlib, improving the ability to communicate analytical findings clearly and effectively.
+
+<ins> Analytical Interpretation & Explanation:</ins> 
+- Strengthened the ability to explain how preprocessing choices influence results, supporting clear verbal and written interpretation in both the assignment report and video presentation.
+
 
 ## 🌍 Question 4 – Non-English NLP with NLTK (GenAI-Permitted)
-Code Overview
 
-For this GenAI-permitted question, I installed an NLTK language package for a non-English language and analyzed a foreign-language article scraped using non-coding methods. Histograms for unigrams, bigrams, and trigrams were generated and compared to English-language results from earlier questions.
+Question Overview
+- For this GenAI-permitted question, I installed an NLTK language package for a non-English language and analyzed a foreign-language article scraped using non-coding methods. Histograms for unigrams, bigrams, and trigrams were generated and compared to English-language results from earlier questions.
 
-Skills Developed –
+```python
+import pandas as pd
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import ToktokTokenizer   
+from nltk.util import ngrams
+from collections import Counter
+import matplotlib.pyplot as plt
 
-Multilingual NLP: Installed and used a non-English NLTK language package.
+# Load non-coding-scraped CSV
+df = pd.read_csv('q4_foreign_article.csv')   # must contain a 'Text' column
+text = " ".join(df['text'].astype(str).tolist())
 
-Cross-Language Comparison: Identified similarities and differences between English and non-English text patterns.
+# basic clean 
+text = text.lower()
+# remove urls
+text = re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:\/[^\s/]*)*', ' ', text)
+# remove punctuation 
+text = re.sub(r'[^\w\s]', ' ', text)
 
-Engagement Analysis: Explored potential relationships between word usage patterns and user engagement metrics such as likes or comments .
+# NLTK language package for spanish
+nltk.download('stopwords')      
+spanish_sw = set(stopwords.words('spanish'))
+
+# tokenize 
+tok = ToktokTokenizer()
+tokens = tok.tokenize(text)
+
+# keep only alphabetic tokens and remove Spanish stopwords
+tokens = [t for t in tokens if t.isalpha() and t not in spanish_sw]
+
+# build top-10 n-grams
+top10_uni = Counter(tokens).most_common(10)
+top10_bi  = Counter(ngrams(tokens, 2)).most_common(10)
+top10_tri = Counter(ngrams(tokens, 3)).most_common(10)
+
+print("Top 10 unigrams:", top10_uni[:5])
+print("Top 10 bigrams:", top10_bi[:3])
+print("Top 10 trigrams:", top10_tri[:3])
+
+# plot
+def plot_top(items, title, filename):
+    labels = [" ".join(g) if isinstance(g, tuple) else g for g, _ in items]
+    values = [c for _, c in items]
+    plt.figure()
+    plt.bar(labels, values)
+    plt.title(title)
+    plt.xlabel("Terms")
+    plt.ylabel("Frequency")
+    plt.xticks(rotation=45, ha="right")
+    plt.tight_layout()
+    plt.savefig(filename)
+    plt.show()
+
+plot_top(top10_uni, "Top 10 Unigrams — Spanish", "Q4_spanish_unigrams.png")
+plot_top(top10_bi,  "Top 10 Bigrams — Spanish", "Q4_spanish_bigrams.png")
+plot_top(top10_tri, "Top 10 Trigrams — Spanish","Q4_spanish_trigrams.png")
+```
 
 ## 📧 Question 5 – Email Spam Detection Analysis
-Code Overview
 
-In this question, I analyzed 20 spam emails by extracting and processing both the subject lines and body text. Top unigrams, bigrams, and trigrams were calculated to identify common linguistic patterns associated with spam content.
+Question Overview
+- In this question, I analyzed 20 spam emails by extracting and processing both the subject lines and body text. Top unigrams, bigrams, and trigrams were calculated to identify common linguistic patterns associated with spam content.
 
 Skills Developed –
 
