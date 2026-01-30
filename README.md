@@ -140,7 +140,76 @@ text_tokens_without_stopwords = [word for word in text_tokens if not word in sto
 print(text_tokens_without_stopwords)
 ```
 
-Skills Developed –
+<ins> Skills Developed – </ins>
+
+Data Extraction and Transformation:
+- Learned how to extract specific text fields from a CSV file and convert them into a format suitable for NLP analysis.
+
+Text Cleaning and Normalization:
+- Applied lowercase conversion, URL removal, and character filtering to standardize raw text and reduce noise in the dataset.
+
+Tokenization:
+- Used NLTK’s word tokenizer to break text into individual tokens, a foundational step for text analytics and n-gram modeling.
+
+Stopword Removal:
+- Implemented stopword filtering to eliminate common, low-value words, improving the quality and relevance of frequency-based text analysis.
+
+NLP Environment Configuration:
+- Configured SSL settings and downloaded required NLTK resources to ensure compatibility and smooth execution across different systems.
+
+<b> Part 2 - International Media Text Preprocessing & Tokenization (NLP Preparation) </b>
+
+Code Overview:
+- This code prepares international news article text for natural language processing (NLP) analysis. Using Pandas, NLTK, and regular expressions, the program loads article text from an international media CSV file, cleans and normalizes the text, removes URLs and irrelevant characters, filters out common stopwords, and tokenizes the text into individual words. The processed tokens are then ready for unigram, bigram, and trigram frequency analysis.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import ssl
+
+inputdata={}
+inputdata = pandas.read_csv('int_data.csv', header=[0], index_col=0).to_dict()
+
+textdictionary = inputdata.get('text')
+textlist =  list(textdictionary.values())
+
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+lowercasetext=textinstring.lower()
+
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+text_tokens = word_tokenize(lowercasetext)
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+print(text_tokens_without_stopwords)
+```
+
+<ins> Skills Developed – </ins>
 
 International Text Processing:
 - Learned how to process and analyze text data from non-U.S. media sources while maintaining a consistent NLP workflow.
@@ -156,13 +225,6 @@ Comparative NLP Readiness:
 
 NLP Resource Management:
 - Configured SSL settings and downloaded required NLTK datasets to ensure smooth execution across different environments.
-
-<b> Part 2 - International Media Text Preprocessing & Tokenization (NLP Preparation) </b>
-
-Code Overview:
-- This code prepares international news article text for natural language processing (NLP) analysis. Using Pandas, NLTK, and regular expressions, the program loads article text from an international media CSV file, cleans and normalizes the text, removes URLs and irrelevant characters, filters out common stopwords, and tokenizes the text into individual words. The processed tokens are then ready for unigram, bigram, and trigram frequency analysis.
-
-
 
 ## 🔗 Question 3 – Bigram & Trigram Analysis
 Question Overview
