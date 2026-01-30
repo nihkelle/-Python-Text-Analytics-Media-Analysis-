@@ -663,22 +663,573 @@ text_tokens_without_stopwords = [word for word in text_tokens if not word in sto
 print(text_tokens_without_stopwords)
 ```
 
-<ins> Skills Developed – </ins>
+<b> Part 2 - International Media Lemmatized N-Gram Analysis </b>
 
-Text Extraction from Structured Data:
-Learned how to retrieve and isolate relevant text fields from a CSV file for focused analysis.
+Code Overview:
+- This code performs lemmatization-based n-gram analysis on international news article text stored in int_data.csv. After loading and cleaning the text using Pandas, regular expressions, and NLTK, the program removes stopwords and applies WordNet lemmatization to convert words into their dictionary base forms. Using the lemmatized text, the code then generates unigrams, bigrams, and trigrams and calculates their frequency using Counter. This approach allows for more linguistically accurate phrase analysis compared to basic stemming. </b>
 
-Text Cleaning and Standardization:
-Applied multiple preprocessing steps—including case normalization, URL removal, and character filtering—to reduce noise in international text data.
+```python
+import pandas
+import re
+import nltk
+from nltk.util import ngrams
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import ssl
 
-Tokenization:
-Used NLTK’s word tokenizer to split cleaned text into individual words, forming the foundation for frequency and n-gram analysis.
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('int_data.csv', header=[0], index_col=0).to_dict()
 
-Stopword Removal:
-Filtered out commonly used words to improve the relevance and interpretability of text analysis results.
+#We can use type to check the data type of a variable
+#print(type(inputdata))
 
-Preparation for Advanced NLP:
-Produced clean, structured tokens suitable for downstream analytical tasks such as frequency counting, visualization, and comparative media analysis.
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+#print(textinstring)
+#print(type(textinstring))
+
+
+#Make the string lower case
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+#print(text_tokens_without_stopwords)
+
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+
+nltk.download('wordnet')
+lemmatizer = WordNetLemmatizer()
+
+lemmatized_words = [lemmatizer.lemmatize(word) for word in text_tokens_without_stopwords]
+
+print(f"Lemmatized Words: {lemmatized_words}")
+
+unigrams = ngrams(lemmatized_words, 1)
+bigrams = ngrams(lemmatized_words,2)
+trigrams = ngrams(lemmatized_words,3)
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+```
+
+<b> Part 3 - International Media Lemmatized N-Gram Frequency Analysis </b>
+
+Code Overview:
+- This code performs lemmatization-based n-gram frequency analysis on international news article text stored in int_data.csv. After loading the dataset, the program cleans and normalizes the text by converting it to lowercase, removing URLs and irrelevant characters, and filtering out common stopwords. The cleaned tokens are then processed using WordNet lemmatization, converting words to their dictionary base forms. Using the lemmatized text, the code generates unigrams, bigrams, and trigrams and identifies the top 10 most frequent occurrences using Python’s Counter class.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.util import ngrams
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import ssl
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('int_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+#print(textinstring)
+#print(type(textinstring))
+
+
+#Make the string lower case
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+from nltk.stem import WordNetLemmatizer
+nltk.download('wordnet'); nltk.download('omw-1.4')
+lemmatizer = WordNetLemmatizer()
+lemmatized_words = [lemmatizer.lemmatize(w) for w in text_tokens_without_stopwords]
+
+#print(text_tokens_without_stopwords)
+
+unigrams = ngrams(lemmatized_words, 1)
+bigrams = ngrams(lemmatized_words,2)
+trigrams = ngrams(lemmatized_words,3)
+
+#print (Counter(unigrams))
+#print (Counter(bigrams))
+#print (Counter(trigrams))
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+```
+
+<b> Part 4 - International Media Lemmatized Bigram & Trigram Visualization </b>
+
+Code Overview:
+- This code performs lemmatization-based bigram and trigram analysis with visualization on international news article text stored in int_data.csv. After loading and preprocessing the text (lowercasing, URL removal, character cleaning, and stopword filtering), the program applies WordNet lemmatization to normalize words to their dictionary base forms. Using the lemmatized tokens, the code generates bigrams and trigrams, calculates their frequencies with Counter, and visualizes the top 10 most frequent lemmatized bigrams and trigrams using bar charts created with Matplotlib.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.util import ngrams
+from collections import Counter
+import ssl
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('int_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+# added this to pull from lemmatized words
+from nltk.stem import WordNetLemmatizer
+nltk.download('wordnet'); nltk.download('omw-1.4')
+lemmatizer = WordNetLemmatizer()
+lemmatized_words = [lemmatizer.lemmatize(w) for w in text_tokens_without_stopwords]
+
+# changed ngrams to lemmatized words
+bigrams = ngrams(lemmatized_words,2)
+trigrams = ngrams(lemmatized_words,3)
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+
+#Draw a histogram of top 10 bigrams
+# changed code to match for bigrams
+top10bigrams = mostcommonbigrams.most_common(10)
+top10bigrams_keys = []
+top10bigrams_values = []
+
+for i in range(len(top10bigrams)):
+    #print(top10bigrams[i][0][0])
+    top10bigrams_keys.append(top10bigrams[i][0][0])
+    top10bigrams_values.append(top10bigrams[i][1])
+
+import matplotlib.pyplot as plt
+
+plt.bar(top10bigrams_keys, top10bigrams_values)
+plt.title("Top 10 Lemmatized Bigrams for Int News")
+plt.xlabel("Bigrams")
+plt.ylabel("Frequency")
+plt.show()
+
+# Draw a histogram for top 10 trigrams
+# changed code to match for trigrams
+top10trigrams = mostcommontrigrams.most_common(10)
+top10trigrams_keys = []
+top10trigrams_values = []
+
+for i in range(len(top10trigrams)):
+    #print(top10trigrams[i][0][0])
+    top10trigrams_keys.append(top10trigrams[i][0][0])
+    top10trigrams_values.append(top10trigrams[i][1])
+
+import matplotlib.pyplot as plt
+
+plt.bar(top10trigrams_keys, top10trigrams_values)
+plt.title("Top 10 Lemmatized Trigrams for Int News")
+plt.xlabel("Trigrams")
+plt.ylabel("Frequency")
+plt.show()
+```
+
+<b> Part 5 U.S. Media Stemmed N-Gram Frequency Analysis </b>
+
+Code Overview:
+- This code performs stemming-based n-gram frequency analysis on U.S.-based news article text stored in us_data.csv. After loading and cleaning the text using Pandas, regular expressions, and NLTK, the program removes stopwords and applies stemming using NLTK’s PorterStemmer (with SnowballStemmer imported for comparison). The stemmed words are then used to generate unigrams, bigrams, and trigrams, and their frequencies are calculated using Counter. This approach demonstrates how stemming reduces words to their root forms and how this impacts phrase-level frequency results.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.util import ngrams
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import ssl
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('us_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+#print(textinstring)
+#print(type(textinstring))
+
+
+#Make the string lower case
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+#print(text_tokens_without_stopwords)
+
+#Perform Stemming
+from nltk.stem import PorterStemmer, SnowballStemmer
+porter_stemmer = PorterStemmer()
+snowball_stemmer = SnowballStemmer(language='english')
+
+porter_stems = [porter_stemmer.stem(word) for word in text_tokens_without_stopwords]
+print("Stemmed words:", porter_stems)
+
+
+unigrams = ngrams(stemmed_words, 1)
+bigrams = ngrams(stemmed_words,2)
+trigrams = ngrams(stemmed_words,3)
+
+#print (Counter(unigrams))
+#print (Counter(bigrams))
+#print (Counter(trigrams))
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+```
+
+<b> Part 6 - U.S. Media Stemmed N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
+
+Code Overview:
+- This code performs stemming-based n-gram analysis on U.S.-based news article text stored in us_data.csv. The program loads the text using Pandas, cleans and normalizes it by lowercasing, removing URLs and unwanted characters, and filtering out stopwords using NLTK. Next, it applies Porter stemming to reduce words to their root forms (ex: “running” → “run”). Using the stemmed tokens, the code generates unigrams, bigrams, and trigrams with ngrams() and uses Counter to calculate and print the top 10 most frequent n-grams for each category.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.util import ngrams
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import ssl
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('us_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+#print(textinstring)
+#print(type(textinstring))
+
+#Make the string lower case
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+from nltk.stem import PorterStemmer
+from nltk.util import ngrams 
+from collections import Counter
+
+stemmer = PorterStemmer()
+stemmed_words = [stemmer.stem(w) for w in text_tokens_without_stopwords]
+
+# variable name here
+unigrams = ngrams(stemmed_words, 1)
+bigrams  = ngrams(stemmed_words, 2)
+trigrams = ngrams(stemmed_words, 3)
+
+#print (Counter(unigrams))
+#print (Counter(bigrams))
+#print (Counter(trigrams))
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+```
+
+<b> Overall Skills Learned </b> 
+
 
 ## 🌍 Question 4 – Non-English NLP with NLTK (GenAI-Permitted)
 Code Overview
