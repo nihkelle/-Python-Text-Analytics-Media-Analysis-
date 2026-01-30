@@ -35,7 +35,7 @@ input_dataframe.to_csv('us_data.csv', index=True, index_label="Index")
 print("done")
 ```
 
-Skills Developed –
+<ins> Skills Developed – </ins>
 
 Data Integration:
 - Learned how to combine multiple datasets from different international news sources into a single structured DataFrame for unified analysis.
@@ -70,7 +70,7 @@ input_dataframe.to_csv('int_data.csv', index=True, index_label="Index")
 print("done")
 ```
 
-Skills Developed –
+<ins> Skills Developed – </ins>
 
 Data Integration:
 - Learned how to combine multiple datasets from different international news sources into a single structured DataFrame for unified analysis.
