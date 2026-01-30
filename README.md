@@ -1331,9 +1331,7 @@ plot_top(top10_bi,  "Top 10 Bigrams — Spanish", "Q4_spanish_bigrams.png")
 plot_top(top10_tri, "Top 10 Trigrams — Spanish","Q4_spanish_trigrams.png")
 ```
 
-<b> Overall Skills Developed <b>
-
-kills Developed –
+<b> Overall Skills Developed </b>
 
 <ins>Multilingual NLP with NLTK:</ins>
 - Learned how to use NLTK’s language resources (Spanish stopwords) to perform text analytics in a non-English setting.
@@ -1533,7 +1531,7 @@ print(mostcommontrigrams.most_common(10))
 Code Overview:
 - This code performs text preprocessing, n-gram frequency analysis, and visualization on spam email content stored in spam_data.csv. It loads the email text using Pandas, cleans and normalizes it by lowercasing, removing URLs and unwanted characters, and filtering out stopwords using NLTK. After tokenization, the code generates unigrams, bigrams, and trigrams using ngrams() and counts their frequencies using Counter. Finally, it extracts the top 10 unigrams and displays them in a bar chart using Matplotlib, making it easier to visually identify common spam-related terms.
 
-'''python
+```python
 import pandas
 import re
 import nltk
