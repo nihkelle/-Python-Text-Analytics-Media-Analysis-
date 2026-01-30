@@ -85,31 +85,91 @@ Data Export and Reusability:
 - Developed the ability to export processed data into a new CSV file, enabling efficient reuse in later text analytics and NLP tasks.
 
 ## 📈 Question 2 – Unigram Histograms (U.S. vs International Media)
-Overview
+Question Overview
 - Using Python, I processed article text to calculate and visualize the top 10 unigrams for both U.S.-based and international news sources. Histograms were created to compare word frequency distributions between the two groups.
 
 Skills Developed –
+Text Preprocessing: 
+- Cleaned and tokenized article text for analysis.
 
-Text Preprocessing: Cleaned and tokenized article text for analysis.
+Data Visualization: 
+- Created histograms to represent unigram frequency distributions.
 
-Data Visualization: Created histograms to represent unigram frequency distributions.
+Comparative Analysis:
+- Interpreted similarities and differences between U.S. and international media coverage .
 
-Comparative Analysis: Interpreted similarities and differences between U.S. and international media coverage .
+<b> Part 1 - U.S. Media Text Preprocessing & Tokenization (NLP Preparation) </b>
 
-🔗 Question 3 – Bigram & Trigram Analysis
-Code Overview
+Code Overview:
+-This code prepares U.S.-based news article text for natural language processing (NLP) analysis. Using Pandas, NLTK, and regular expressions, the program loads article text from a CSV file, cleans and standardizes the text, removes unnecessary characters and URLs, eliminates common stopwords, and tokenizes the text into individual words for further unigram, bigram, and trigram analysis.
 
-This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
+```python
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import ssl
+
+inputdata={}
+inputdata = pandas.read_csv('us_data.csv', header=[0], index_col=0).to_dict()
+
+textdictionary = inputdata.get('text')
+textlist =  list(textdictionary.values())
+
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+lowercasetext=textinstring.lower()
+
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+text_tokens = word_tokenize(lowercasetext)
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+print(text_tokens_without_stopwords)
+```
+
+<b> Part 2 - International Media Text Preprocessing & Tokenization (NLP Preparation) </b>
+
+Code Overview:
+- This code prepares international news article text for natural language processing (NLP) analysis. Using Pandas, NLTK, and regular expressions, the program loads article text from an international media CSV file, cleans and normalizes the text, removes URLs and irrelevant characters, filters out common stopwords, and tokenizes the text into individual words. The processed tokens are then ready for unigram, bigram, and trigram frequency analysis.
+
+## 🔗 Question 3 – Bigram & Trigram Analysis
+Question Overview
+- This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
 
 Skills Developed –
+N-gram Modeling: 
+- Generated bigrams and trigrams to capture contextual word relationships.
 
-N-gram Modeling: Generated bigrams and trigrams to capture contextual word relationships.
+Advanced NLP Techniques: 
+- Applied stemming and lemmatization to compare linguistic normalization methods.
 
-Advanced NLP Techniques: Applied stemming and lemmatization to compare linguistic normalization methods.
+Critical Interpretation: 
+- Analyzed how phrase-level patterns differed across regions and preprocessing techniques .
 
-Critical Interpretation: Analyzed how phrase-level patterns differed across regions and preprocessing techniques .
-
-🌍 Question 4 – Non-English NLP with NLTK (GenAI-Permitted)
+## 🌍 Question 4 – Non-English NLP with NLTK (GenAI-Permitted)
 Code Overview
 
 For this GenAI-permitted question, I installed an NLTK language package for a non-English language and analyzed a foreign-language article scraped using non-coding methods. Histograms for unigrams, bigrams, and trigrams were generated and compared to English-language results from earlier questions.
