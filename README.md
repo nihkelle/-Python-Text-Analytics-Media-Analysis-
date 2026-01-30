@@ -1266,6 +1266,11 @@ print(mostcommontrigrams.most_common(10))
 Question Overview
 - For this GenAI-permitted question, I installed an NLTK language package for a non-English language and analyzed a foreign-language article scraped using non-coding methods. Histograms for unigrams, bigrams, and trigrams were generated and compared to English-language results from earlier questions.
 
+<b> Part 1 - Non-English NLP (Spanish) Unigram/Bigram/Trigram Histograms </b>
+
+Code Overview:
+- This code analyzes a foreign-language (Spanish) news article using Python and NLTK’s Spanish stopwords package. It loads a scraped CSV file (q4_foreign_article.csv), combines the article text into one string, cleans the text by lowercasing and removing URLs/punctuation, and tokenizes it using ToktokTokenizer. After filtering out non-alphabetic tokens and Spanish stopwords, the code calculates the top 10 unigrams, bigrams, and trigrams using Counter and ngrams(). Finally, it visualizes each set of top n-grams with Matplotlib bar charts and saves the plots as PNG files for reporting and video explanation.
+
 ```python
 import pandas as pd
 import re
@@ -1326,15 +1331,95 @@ plot_top(top10_bi,  "Top 10 Bigrams — Spanish", "Q4_spanish_bigrams.png")
 plot_top(top10_tri, "Top 10 Trigrams — Spanish","Q4_spanish_trigrams.png")
 ```
 
+<b> Overall Skills Developed <b>
+
+kills Developed –
+
+<ins>Multilingual NLP with NLTK:</ins>
+- Learned how to use NLTK’s language resources (Spanish stopwords) to perform text analytics in a non-English setting.
+
+<ins>Foreign-Language Text Cleaning:</ins>
+- Practiced cleaning real-world scraped text by removing URLs, punctuation, and inconsistent formatting to create a stable input for NLP analysis.
+
+<ins>Tokenization & Stopword Filtering (Spanish):</ins>
+- Used ToktokTokenizer and Spanish stopwords to extract meaningful tokens and reduce noise from common function words.
+
+<ins>N-Gram Feature Extraction:</ins>
+- Generated and ranked unigrams, bigrams, and trigrams to capture both word-level and phrase-level patterns in the Spanish article.
+
+<ins>Data Visualization & Exporting Results:</ins>
+- Created reusable histogram charts and saved them as image files (.png), improving the ability to communicate findings clearly in a report or screen-recording video.
+
+<ins>Reusable Plotting Function Design:</ins>
+- Built a flexible plotting function (plot_top) that can visualize different n-gram types by reusing the same logic, supporting clean and maintainable code.
+
 ## 📧 Question 5 – Email Spam Detection Analysis
 
 Question Overview
 - In this question, I analyzed 20 spam emails by extracting and processing both the subject lines and body text. Top unigrams, bigrams, and trigrams were calculated to identify common linguistic patterns associated with spam content.
 
-Skills Developed –
+<b> Part 1 - 
 
-Text Classification Foundations: Identified linguistic features commonly associated with spam emails.
+```python
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import ssl
 
-Feature Extraction: Compared word and phrase patterns between email titles and body text.
+# created a dictionary here titled inputdata
+inputdata={}
+# assigned the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('spam_data.csv', header=[0], index_col=0).to_dict()
 
-Practical Application: Evaluated how n-gram frequency supports spam detection logic .
+# using the column headers from the csv file to find the data I am interested to analyze
+
+# created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+# need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+# make the string lower case
+lowercasetext=textinstring.lower()
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+print(text_tokens_without_stopwords)
+```
