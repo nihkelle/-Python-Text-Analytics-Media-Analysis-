@@ -406,6 +406,134 @@ Frequency-Based Pattern Recognition:
 Reproducible NLP Workflow:
 - Built a repeatable pipeline that can be applied to multiple datasets with minimal modification.
 
+<b> Part 5 - U.S. Media Unigram Visualization & N-Gram Analysis </b>
+
+Code Overview:
+- This code extends U.S. media text analysis by combining n-gram frequency extraction with data visualization. After cleaning, tokenizing, and removing stopwords from the text in us_data.csv, the program calculates the top unigrams, bigrams, and trigrams. The top 10 unigrams are then visualized using a bar chart created with Matplotlib, allowing for a clear visual representation of word frequency in U.S. media articles.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.util import ngrams
+from collections import Counter
+import ssl
+
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('us_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+#print(text_tokens_without_stopwords)
+
+unigrams = ngrams(text_tokens_without_stopwords, 1)
+bigrams = ngrams(text_tokens_without_stopwords,2)
+trigrams = ngrams(text_tokens_without_stopwords,3)
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+
+#This will print top 3 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 3 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+
+top3unigrams = mostcommonunigrams.most_common(10)
+top3unigrams_keys = []
+top3unigrams_values = []
+
+for i in range(len(top3unigrams)):
+    #print(top3unigrams[i][0][0])
+    top3unigrams_keys.append(top3unigrams[i][0][0])
+    top3unigrams_values.append(top3unigrams[i][1])
+
+#print(top3unigrams_keys)
+#print(top3unigrams_values)
+
+import matplotlib.pyplot as plt
+
+plt.bar(top3unigrams_keys, top3unigrams_values)
+plt.title("Top 10 Unigrams")
+plt.xlabel("Unigrams")
+plt.ylabel("Frequency")
+plt.show()
+```
+
+<ins> Skills Developed – </ins>
+
+Data Visualization:
+- Learned how to transform frequency counts into bar charts, making textual patterns easier to interpret and communicate.
+
+Integration of NLP and Visualization:
+- Combined NLTK-based text analysis with Matplotlib to create visual insights from unstructured data.
+
+Feature Selection for Analysis:
+- Extracted unigram keys and values from frequency results to prepare data for plotting.
+
+Comparative Media Analysis:
+- Created outputs that directly support visual and statistical comparison between U.S. and international media coverage.
+
 ## 🔗 Question 3 – Bigram & Trigram Analysis
 Question Overview
 - This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
