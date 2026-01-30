@@ -305,6 +305,107 @@ Frequency Counting with Counter:
 Comparative Text Analytics Readiness:
 - Prepared outputs that can be directly used for histogram visualizations and comparisons against international news sources in later questions.
 
+<b> Part 4 - International Media N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
+
+Code Overview:
+- This code performs n-gram frequency analysis on international news articles stored in int_data.csv. The program cleans and normalizes the text by converting it to lowercase, removing URLs and irrelevant characters, and filtering out stopwords. After tokenization, unigrams, bigrams, and trigrams are generated using NLTK. The Counter class is then used to calculate and print the top 10 most frequent unigrams, bigrams, and trigrams, enabling comparison with U.S. media coverage.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.util import ngrams
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import ssl
+
+# created a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('us_data.csv', header=[0], index_col=0).to_dict()
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+
+#convert list to string
+# need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+#Make the string lower case
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+#print(text_tokens_without_stopwords)
+
+unigrams = ngrams(text_tokens_without_stopwords, 1)
+
+bigrams = ngrams(text_tokens_without_stopwords,2)
+trigrams = ngrams(text_tokens_without_stopwords,3)
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+```
+
+<ins> Skills Developed – </ins>
+
+Cross-Regional Text Analytics:
+- Applied the same n-gram analysis workflow to international media data, ensuring consistency and comparability with U.S. news analysis.
+
+Contextual Phrase Extraction:
+- Used bigrams and trigrams to capture short phrases that reveal narrative framing and topic emphasis in international media.
+
+Frequency-Based Pattern Recognition:
+- Identified dominant words and phrases by calculating occurrence counts, supporting deeper media comparison insights.
+
+Reproducible NLP Workflow:
+- Built a repeatable pipeline that can be applied to multiple datasets with minimal modification.
+
 ## 🔗 Question 3 – Bigram & Trigram Analysis
 Question Overview
 - This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
