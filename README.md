@@ -58,22 +58,22 @@ print("done")
 
 <b> Overall Skills Developed </b>
 
-Media Literacy & Source Evaluation:
+<ins> Media Literacy & Source Evaluation: </ins>
 - Developed the ability to identify, compare, and select credible U.S. and international news sources while maintaining topic consistency across multiple media outlets.
 
-Non-Coding Data Collection Techniques:
+<ins> Non-Coding Data Collection Techniques: </ins>
 - Gained experience using non-coding scraping tools to collect structured article data, including titles, authors, publication dates, and full text, in compliance with assignment guidelines.
 
-Data Organization & Structuring:
+<ins> Data Organization & Structuring: </ins>
 - Learned how to organize raw scraped data into well-structured CSV files, enabling efficient downstream analysis using Python and NLP libraries.
 
-Dataset Integration:
+<ins> Dataset Integration: </ins>
 - Strengthened skills in combining multiple datasets from different media sources into unified U.S. and international datasets suitable for comparative analysis.
 
-Data Cleaning & Quality Control:
+<ins> Data Cleaning & Quality Control: </ins>
 - Practiced identifying and removing redundant or unnecessary data (such as duplicate index columns) to ensure consistency, accuracy, and reusability.
 
-Analytical Readiness:
+<ins> Analytical Readiness: </ins>
 - Prepared clean, structured datasets that serve as the foundation for text preprocessing, n-gram analysis, and visualization tasks in later questions.
 
 
@@ -569,24 +569,24 @@ plt.show()
 
 <b> Overall Skills Developed </b>
 
-N-Gram Analysis (Phrase-Level Patterns):
+<ins> N-Gram Analysis (Phrase-Level Patterns): </ins>
 - Learned how to move beyond single-word frequency by generating bigrams and trigrams, which capture short phrases and reveal stronger context about how topics are framed in both U.S. and international articles.
 
-Comparative Text Analytics:
+<ins> Comparative Text Analytics: </ins>
 - Strengthened the ability to compare language patterns across two datasets by applying the same preprocessing and n-gram workflow to U.S. and international sources, making the results more consistent and fair to interpret.
 
-Text Preprocessing for Reliable Results:
+<ins> Text Preprocessing for Reliable Results: </ins>
 - Improved skills in cleaning text (lowercasing, removing URLs/special characters, and filtering stopwords) to reduce noise and ensure that phrase patterns represent meaningful content rather than formatting artifacts.
 
-Frequency Counting and Feature Extraction:
+<ins> Frequency Counting and Feature Extraction: </ins>
 - Used Counter to calculate the most common unigrams/bigrams/trigrams, helping develop an understanding of how frequency-based features can summarize large bodies of text and support data-driven conclusions.
 
-Stemming vs Lemmatization (Conceptual Understanding):
+<ins> Stemming vs Lemmatization (Conceptual Understanding): </ins>
 - Stemming: trims words down to a root form (faster, but can be less accurate or produce non-words).
 - Lemmatization: converts words to their dictionary base form (more accurate and meaningful, but can require more processing).
 This understanding helps explain why word frequency results may change depending on which method is used.
 
-Interpretation and Communication of Findings:
+<ins> Interpretation and Communication of Findings: </ins>
 - Built the ability to explain how phrase-level trends relate and differ across datasets (U.S. vs international) and communicate those insights clearly using both printed frequency results and histograms.
 
 ## 🔗 Question 3 – Bigram & Trigram Analysis
