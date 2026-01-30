@@ -88,16 +88,6 @@ Data Export and Reusability:
 Question Overview
 - Using Python, I processed article text to calculate and visualize the top 10 unigrams for both U.S.-based and international news sources. Histograms were created to compare word frequency distributions between the two groups.
 
-Skills Developed –
-Text Preprocessing: 
-- Cleaned and tokenized article text for analysis.
-
-Data Visualization: 
-- Created histograms to represent unigram frequency distributions.
-
-Comparative Analysis:
-- Interpreted similarities and differences between U.S. and international media coverage .
-
 <b> Part 1 - U.S. Media Text Preprocessing & Tokenization (NLP Preparation) </b>
 
 Code Overview:
@@ -150,10 +140,29 @@ text_tokens_without_stopwords = [word for word in text_tokens if not word in sto
 print(text_tokens_without_stopwords)
 ```
 
+Skills Developed –
+
+International Text Processing:
+- Learned how to process and analyze text data from non-U.S. media sources while maintaining a consistent NLP workflow.
+
+Text Cleaning and Normalization:
+- Applied standardized cleaning techniques to reduce noise and ensure fair comparison between U.S. and international text datasets.
+
+Tokenization and Stopword Filtering:
+- Used NLTK tools to tokenize text and remove common words, improving the quality of frequency-based text analysis.
+
+Comparative NLP Readiness:
+- Prepared international media text in the same format as U.S. media data, enabling accurate cross-regional comparisons in unigram, bigram, and trigram analysis.
+
+NLP Resource Management:
+- Configured SSL settings and downloaded required NLTK datasets to ensure smooth execution across different environments.
+
 <b> Part 2 - International Media Text Preprocessing & Tokenization (NLP Preparation) </b>
 
 Code Overview:
 - This code prepares international news article text for natural language processing (NLP) analysis. Using Pandas, NLTK, and regular expressions, the program loads article text from an international media CSV file, cleans and normalizes the text, removes URLs and irrelevant characters, filters out common stopwords, and tokenizes the text into individual words. The processed tokens are then ready for unigram, bigram, and trigram frequency analysis.
+
+
 
 ## 🔗 Question 3 – Bigram & Trigram Analysis
 Question Overview
