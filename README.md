@@ -1358,7 +1358,10 @@ kills Developed –
 Question Overview
 - In this question, I analyzed 20 spam emails by extracting and processing both the subject lines and body text. Top unigrams, bigrams, and trigrams were calculated to identify common linguistic patterns associated with spam content.
 
-<b> Part 1 - 
+<b> Part 1 - Spam Email Text Cleaning & Tokenization (NLP Preparation) </b>
+
+Code Overview:
+- This code prepares spam email text stored in spam_data.csv for natural language processing (NLP) analysis. Using Pandas, NLTK, and regular expressions, the program loads the email text from the CSV file, combines all entries into one large string, and cleans the content by converting it to lowercase, removing URLs, and deleting unwanted characters. It then tokenizes the cleaned text into individual words and removes common stopwords, producing a list of meaningful tokens that can be used for unigram, bigram, and trigram frequency analysis in spam detection.
 
 ```python
 import pandas
@@ -1423,3 +1426,220 @@ text_tokens_without_stopwords = [word for word in text_tokens if not word in sto
 
 print(text_tokens_without_stopwords)
 ```
+
+<b> Part 2 - Spam Email N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
+
+Code Overview:
+- This code performs n-gram frequency analysis on spam email text stored in spam_data.csv. The program loads the email text using Pandas, cleans and standardizes it by lowercasing, removing URLs and unwanted characters, and filtering out stopwords using NLTK. After tokenizing the cleaned text, it generates unigrams, bigrams, and trigrams using ngrams() and calculates how often each appears using Counter. Finally, it prints the top 10 most common unigrams, bigrams, and trigrams, which helps reveal common language patterns associated with spam.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.util import ngrams
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import ssl
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('spam_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+#print(textinstring)
+#print(type(textinstring))
+
+#Make the string lower case
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+#print(text_tokens_without_stopwords)
+
+unigrams = ngrams(text_tokens_without_stopwords, 1)
+
+bigrams = ngrams(text_tokens_without_stopwords,2)
+trigrams = ngrams(text_tokens_without_stopwords,3)
+
+#print (Counter(unigrams))
+#print (Counter(bigrams))
+#print (Counter(trigrams))
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+
+#This will print top 10 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 10 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+```
+
+<b> Part 3 - Spam Email Unigram Visualization & N-Gram Analysis </b>
+
+Code Overview:
+- This code performs text preprocessing, n-gram frequency analysis, and visualization on spam email content stored in spam_data.csv. It loads the email text using Pandas, cleans and normalizes it by lowercasing, removing URLs and unwanted characters, and filtering out stopwords using NLTK. After tokenization, the code generates unigrams, bigrams, and trigrams using ngrams() and counts their frequencies using Counter. Finally, it extracts the top 10 unigrams and displays them in a bar chart using Matplotlib, making it easier to visually identify common spam-related terms.
+
+'''python
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.util import ngrams
+from collections import Counter
+import ssl
+
+#I am creating a dictionary here titled inputdata
+inputdata={}
+#I am assigning the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('spam_data.csv', header=[0], index_col=0).to_dict()
+
+#We can use type to check the data type of a variable
+#print(type(inputdata))
+
+#I am using the column headers from the csv file to find the data I am interested to analyze
+
+# I created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# I am converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+#I need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+textinstring += ' '+ str(eachletter)
+lowercasetext=textinstring.lower()
+#print(lowercasetext)
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+#print(lowercasedescriptions)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+#print(stopwords.words('english'))
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+#print(text_tokens_without_stopwords)
+
+unigrams = ngrams(text_tokens_without_stopwords, 1)
+bigrams = ngrams(text_tokens_without_stopwords,2)
+trigrams = ngrams(text_tokens_without_stopwords,3)
+
+mostcommonunigrams = Counter(unigrams)
+#print(type(mostcommonunigrams))
+#This will print top 10 unigrams
+print(mostcommonunigrams.most_common(10))
+
+
+#This will print top 3 bigrams
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+#This will print top 3 trigrams
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+
+top3unigrams = mostcommonunigrams.most_common(10)
+top3unigrams_keys = []
+top3unigrams_values = []
+
+for i in range(len(top3unigrams)):
+    #print(top3unigrams[i][0][0])
+    top3unigrams_keys.append(top3unigrams[i][0][0])
+    top3unigrams_values.append(top3unigrams[i][1])
+
+#print(top3unigrams_keys)
+#print(top3unigrams_values)
+
+import matplotlib.pyplot as plt
+
+plt.bar(top3unigrams_keys, top3unigrams_values)
+plt.title("Top 10 Unigrams")
+plt.xlabel("Unigrams")
+plt.ylabel("Frequency")
+plt.show()
+```
+
+<b> Overall Learned Skills</b>
+
