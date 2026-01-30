@@ -56,7 +56,7 @@ input_dataframe.to_csv('int_data.csv', index=True, index_label="Index")
 print("done")
 ```
 
-<b> Skills Developed </b>
+<b> Overall Skills Developed </b>
 
 Media Literacy & Source Evaluation:
 - Developed the ability to identify, compare, and select credible U.S. and international news sources while maintaining topic consistency across multiple media outlets.
@@ -134,23 +134,6 @@ text_tokens_without_stopwords = [word for word in text_tokens if not word in sto
 print(text_tokens_without_stopwords)
 ```
 
-<ins> Skills Developed – </ins>
-
-Data Extraction and Transformation:
-- Learned how to extract specific text fields from a CSV file and convert them into a format suitable for NLP analysis.
-
-Text Cleaning and Normalization:
-- Applied lowercase conversion, URL removal, and character filtering to standardize raw text and reduce noise in the dataset.
-
-Tokenization:
-- Used NLTK’s word tokenizer to break text into individual tokens, a foundational step for text analytics and n-gram modeling.
-
-Stopword Removal:
-- Implemented stopword filtering to eliminate common, low-value words, improving the quality and relevance of frequency-based text analysis.
-
-NLP Environment Configuration:
-- Configured SSL settings and downloaded required NLTK resources to ensure compatibility and smooth execution across different systems.
-
 <b> Part 2 - International Media Text Preprocessing & Tokenization (NLP Preparation) </b>
 
 Code Overview:
@@ -202,23 +185,6 @@ text_tokens_without_stopwords = [word for word in text_tokens if not word in sto
 
 print(text_tokens_without_stopwords)
 ```
-
-<ins> Skills Developed – </ins>
-
-International Text Processing:
-- Learned how to process and analyze text data from non-U.S. media sources while maintaining a consistent NLP workflow.
-
-Text Cleaning and Normalization:
-- Applied standardized cleaning techniques to reduce noise and ensure fair comparison between U.S. and international text datasets.
-
-Tokenization and Stopword Filtering:
-- Used NLTK tools to tokenize text and remove common words, improving the quality of frequency-based text analysis.
-
-Comparative NLP Readiness:
-- Prepared international media text in the same format as U.S. media data, enabling accurate cross-regional comparisons in unigram, bigram, and trigram analysis.
-
-NLP Resource Management:
-- Configured SSL settings and downloaded required NLTK datasets to ensure smooth execution across different environments.
 
 <b> Part 3 - U.S. Media N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
 
@@ -284,20 +250,6 @@ print(mostcommonbigrams.most_common(10))
 mostcommontrigrams = Counter(trigrams)
 print(mostcommontrigrams.most_common(10))
 ```
-
-<ins> Skills Developed – </ins>
-
-NLP Preprocessing Pipeline:
-- Reinforced a complete workflow for text analysis, including cleaning, normalization, tokenization, and stopword removal—steps that improve the accuracy of n-gram results.
-
-N-Gram Generation (Context Building):
-- Learned how unigrams capture individual word frequency, while bigrams and trigrams capture short phrases that provide more context and meaning from the text.
-
-Frequency Counting with Counter:
-- Used Python’s collections.Counter to efficiently count word and phrase occurrences and extract the most common patterns in the dataset.
-
-Comparative Text Analytics Readiness:
-- Prepared outputs that can be directly used for histogram visualizations and comparisons against international news sources in later questions.
 
 <b> Part 4 - International Media N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
 
@@ -385,20 +337,6 @@ print(mostcommonbigrams.most_common(10))
 mostcommontrigrams = Counter(trigrams)
 print(mostcommontrigrams.most_common(10))
 ```
-
-<ins> Skills Developed – </ins>
-
-Cross-Regional Text Analytics:
-- Applied the same n-gram analysis workflow to international media data, ensuring consistency and comparability with U.S. news analysis.
-
-Contextual Phrase Extraction:
-- Used bigrams and trigrams to capture short phrases that reveal narrative framing and topic emphasis in international media.
-
-Frequency-Based Pattern Recognition:
-- Identified dominant words and phrases by calculating occurrence counts, supporting deeper media comparison insights.
-
-Reproducible NLP Workflow:
-- Built a repeatable pipeline that can be applied to multiple datasets with minimal modification.
 
 <b> Part 5 - U.S. Media Unigram Visualization & N-Gram Analysis </b>
 
@@ -513,20 +451,6 @@ plt.xlabel("Unigrams")
 plt.ylabel("Frequency")
 plt.show()
 ```
-
-<ins> Skills Developed – </ins>
-
-Data Visualization:
-- Learned how to transform frequency counts into bar charts, making textual patterns easier to interpret and communicate.
-
-Integration of NLP and Visualization:
-- Combined NLTK-based text analysis with Matplotlib to create visual insights from unstructured data.
-
-Feature Selection for Analysis:
-- Extracted unigram keys and values from frequency results to prepare data for plotting.
-
-Comparative Media Analysis:
-- Created outputs that directly support visual and statistical comparison between U.S. and international media coverage.
 
 <b> Part 6 - International Media Unigram Visualization & N-Gram Analysis </b>
 
@@ -643,22 +567,27 @@ plt.ylabel("Frequency")
 plt.show()
 ```
 
-<ins> Skills Developed – </ins>
+<b> Overall Skills Developed </b>
 
-End-to-End NLP Analysis:
-- Implemented a complete natural language processing workflow, from raw text cleaning to frequency analysis and visualization.
+N-Gram Analysis (Phrase-Level Patterns):
+- Learned how to move beyond single-word frequency by generating bigrams and trigrams, which capture short phrases and reveal stronger context about how topics are framed in both U.S. and international articles.
 
-N-Gram Modeling:
-- Generated unigrams, bigrams, and trigrams to capture both individual word usage and contextual phrase patterns in international news content.
+Comparative Text Analytics:
+- Strengthened the ability to compare language patterns across two datasets by applying the same preprocessing and n-gram workflow to U.S. and international sources, making the results more consistent and fair to interpret.
 
-Data Visualization with Matplotlib:
-- Learned how to convert textual frequency data into bar charts, making abstract word patterns easier to interpret and communicate.
+Text Preprocessing for Reliable Results:
+- Improved skills in cleaning text (lowercasing, removing URLs/special characters, and filtering stopwords) to reduce noise and ensure that phrase patterns represent meaningful content rather than formatting artifacts.
 
-Comparative Media Readiness:
-- Produced visual outputs that can be directly compared with U.S. media histograms to identify similarities and differences in coverage and framing.
+Frequency Counting and Feature Extraction:
+- Used Counter to calculate the most common unigrams/bigrams/trigrams, helping develop an understanding of how frequency-based features can summarize large bodies of text and support data-driven conclusions.
 
-Analytical Communication:
-- Created interpretable visual evidence that supports narrative explanations in the homework video presentation.
+Stemming vs Lemmatization (Conceptual Understanding):
+- Stemming: trims words down to a root form (faster, but can be less accurate or produce non-words).
+- Lemmatization: converts words to their dictionary base form (more accurate and meaningful, but can require more processing).
+This understanding helps explain why word frequency results may change depending on which method is used.
+
+Interpretation and Communication of Findings:
+- Built the ability to explain how phrase-level trends relate and differ across datasets (U.S. vs international) and communicate those insights clearly using both printed frequency results and histograms.
 
 ## 🔗 Question 3 – Bigram & Trigram Analysis
 Question Overview
