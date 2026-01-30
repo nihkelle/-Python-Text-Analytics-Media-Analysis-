@@ -226,19 +226,90 @@ Comparative NLP Readiness:
 NLP Resource Management:
 - Configured SSL settings and downloaded required NLTK datasets to ensure smooth execution across different environments.
 
+<b> Part 3 - U.S. Media N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
+
+Code Overview:
+- This code performs n-gram analysis on U.S.-based news article text stored in us_data.csv. After loading the dataset with Pandas, the program cleans and normalizes the text by lowercasing, removing URLs and unwanted characters, and filtering out stopwords using NLTK. The cleaned text is then tokenized, and unigrams, bigrams, and trigrams are generated using nltk.util.ngrams. Finally, the code uses Counter to calculate frequency counts and prints the top 10 most common unigrams, bigrams, and trigrams.
+
+```python
+import pandas
+import re
+import nltk
+from nltk.util import ngrams
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import ssl
+
+inputdata={}
+inputdata = pandas.read_csv('us_data.csv', header=[0], index_col=0).to_dict()
+
+textdictionary = inputdata.get('text')
+textlist =  list(textdictionary.values())
+
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+lowercasetext=textinstring.lower()
+
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+text_tokens = word_tokenize(lowercasetext)
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+unigrams = ngrams(text_tokens_without_stopwords, 1)
+bigrams = ngrams(text_tokens_without_stopwords,2)
+trigrams = ngrams(text_tokens_without_stopwords,3)
+
+mostcommonunigrams = Counter(unigrams)
+print(mostcommonunigrams.most_common(10))
+
+mostcommonbigrams = Counter(bigrams)
+print(mostcommonbigrams.most_common(10))
+
+mostcommontrigrams = Counter(trigrams)
+print(mostcommontrigrams.most_common(10))
+```
+
+<ins> Skills Developed – </ins>
+
+NLP Preprocessing Pipeline:
+- Reinforced a complete workflow for text analysis, including cleaning, normalization, tokenization, and stopword removal—steps that improve the accuracy of n-gram results.
+
+N-Gram Generation (Context Building):
+- Learned how unigrams capture individual word frequency, while bigrams and trigrams capture short phrases that provide more context and meaning from the text.
+
+Frequency Counting with Counter:
+- Used Python’s collections.Counter to efficiently count word and phrase occurrences and extract the most common patterns in the dataset.
+
+Comparative Text Analytics Readiness:
+- Prepared outputs that can be directly used for histogram visualizations and comparisons against international news sources in later questions.
+
 ## 🔗 Question 3 – Bigram & Trigram Analysis
 Question Overview
 - This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
 
-Skills Developed –
-N-gram Modeling: 
-- Generated bigrams and trigrams to capture contextual word relationships.
-
-Advanced NLP Techniques: 
-- Applied stemming and lemmatization to compare linguistic normalization methods.
-
-Critical Interpretation: 
-- Analyzed how phrase-level patterns differed across regions and preprocessing techniques .
+<b> Part 1 - 
 
 ## 🌍 Question 4 – Non-English NLP with NLTK (GenAI-Permitted)
 Code Overview
