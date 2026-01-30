@@ -35,20 +35,6 @@ input_dataframe.to_csv('us_data.csv', index=True, index_label="Index")
 print("done")
 ```
 
-<ins> Skills Developed – </ins>
-
-Data Integration:
-- Learned how to combine multiple datasets from different international news sources into a single structured DataFrame for unified analysis.
-
-Index Management:
-- Practiced resetting and managing DataFrame indices to ensure the merged dataset remained organized and free of inconsistencies.
-
-Data Cleaning:
-- Identified and removed unnecessary index columns to prevent duplication and maintain data integrity.
-
-Data Export and Reusability:
-- Developed the ability to export processed data into a new CSV file, enabling efficient reuse in later text analytics and NLP tasks.
-
 <b> Part 2 - International Media Data Aggregation (CSV Processing) </b>
 
 Code Overview:
@@ -70,21 +56,29 @@ input_dataframe.to_csv('int_data.csv', index=True, index_label="Index")
 print("done")
 ```
 
-<ins> Skills Developed – </ins>
+<b> Skills Developed </b>
 
-Data Integration:
-- Learned how to combine multiple datasets from different international news sources into a single structured DataFrame for unified analysis.
+Media Literacy & Source Evaluation:
+- Developed the ability to identify, compare, and select credible U.S. and international news sources while maintaining topic consistency across multiple media outlets.
 
-Index Management:
-- Practiced resetting and managing DataFrame indices to ensure the merged dataset remained organized and free of inconsistencies.
+Non-Coding Data Collection Techniques:
+- Gained experience using non-coding scraping tools to collect structured article data, including titles, authors, publication dates, and full text, in compliance with assignment guidelines.
 
-Data Cleaning:
-- Identified and removed unnecessary index columns to prevent duplication and maintain data integrity.
+Data Organization & Structuring:
+- Learned how to organize raw scraped data into well-structured CSV files, enabling efficient downstream analysis using Python and NLP libraries.
 
-Data Export and Reusability:
-- Developed the ability to export processed data into a new CSV file, enabling efficient reuse in later text analytics and NLP tasks.
+Dataset Integration:
+- Strengthened skills in combining multiple datasets from different media sources into unified U.S. and international datasets suitable for comparative analysis.
+
+Data Cleaning & Quality Control:
+- Practiced identifying and removing redundant or unnecessary data (such as duplicate index columns) to ensure consistency, accuracy, and reusability.
+
+Analytical Readiness:
+- Prepared clean, structured datasets that serve as the foundation for text preprocessing, n-gram analysis, and visualization tasks in later questions.
+
 
 ## 📈 Question 2 – Unigram Histograms (U.S. vs International Media)
+
 Question Overview
 - Using Python, I processed article text to calculate and visualize the top 10 unigrams for both U.S.-based and international news sources. Histograms were created to compare word frequency distributions between the two groups.
 
