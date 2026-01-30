@@ -670,7 +670,92 @@ Analytical Communication:
 Question Overview
 - This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
 
-<b> Part 1 - 
+<b> Part 1 - International Media Text Cleaning & Token Extraction </b>
+
+Code Overview:
+- This code focuses on cleaning and tokenizing international news article text stored in int_data.csv. Using Pandas, NLTK, and regular expressions, the program extracts article text, converts it into a single string, standardizes the text by lowercasing and removing URLs and irrelevant characters, and eliminates common stopwords. The final output is a list of cleaned word tokens that can be used for further NLP tasks such as unigram, bigram, and trigram analysis.
+
+```python
+# example 3 for int data
+import pandas
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import ssl
+
+# created a dictionary here titled inputdata
+inputdata={}
+# assigned the content of the csv file to my dictionary
+#header is my row in the csv file that is why header is 0 below
+inputdata = pandas.read_csv('int_data.csv', header=[0], index_col=0).to_dict()
+
+# using the column headers from the csv file to find the data I am interested to analyze
+
+# created a new dictionary here for the description column in my csv file
+textdictionary = inputdata.get('text')
+#print(type(textdictionary))
+
+# converting the dictionary to a list so I can analyze the data
+textlist =  list(textdictionary.values())
+#print(type(titlelist))
+
+#convert list to string
+# need the data in string format for analysis purposes
+textinstring = ''
+for eachletter in  textlist:
+    textinstring += ' '+ str(eachletter)
+
+# make the string lower case
+lowercasetext=textinstring.lower()
+
+#remove the url from text to prevent a future error
+lowercasetext= re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', lowercasetext)
+
+#remove anything that does not make sense to you from the string
+lowercasetext = lowercasetext.replace(".", "")
+lowercasetext = lowercasetext.replace("#", "")
+lowercasetext = lowercasetext.replace(",", "")
+lowercasetext = lowercasetext.replace("\\", "")
+lowercasetext = lowercasetext.replace("(", "")
+lowercasetext = lowercasetext.replace(")", "")
+lowercasetext = lowercasetext.replace("+", "")
+lowercasetext = lowercasetext.replace("!", "")
+lowercasetext = lowercasetext.replace("&", "")
+
+#remove the stop or common words from the string
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+text_tokens = word_tokenize(lowercasetext)
+
+text_tokens_without_stopwords = [word for word in text_tokens if not word in stopwords.words()]
+
+print(text_tokens_without_stopwords)
+```
+
+<ins> Skills Developed – </ins>
+
+Text Extraction from Structured Data:
+Learned how to retrieve and isolate relevant text fields from a CSV file for focused analysis.
+
+Text Cleaning and Standardization:
+Applied multiple preprocessing steps—including case normalization, URL removal, and character filtering—to reduce noise in international text data.
+
+Tokenization:
+Used NLTK’s word tokenizer to split cleaned text into individual words, forming the foundation for frequency and n-gram analysis.
+
+Stopword Removal:
+Filtered out commonly used words to improve the relevance and interpretability of text analysis results.
+
+Preparation for Advanced NLP:
+Produced clean, structured tokens suitable for downstream analytical tasks such as frequency counting, visualization, and comparative media analysis.
 
 ## 🌍 Question 4 – Non-English NLP with NLTK (GenAI-Permitted)
 Code Overview
