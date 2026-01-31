@@ -3,9 +3,9 @@
 ## Description
 - In this assignment, I applied Python and text analytics techniques to analyze media content across U.S. and international news sources. The project focused on data collection, natural language processing (NLP), and visualization using histograms to uncover patterns in word usage. Through hands-on implementation, I strengthened my ability to transform unstructured text data into meaningful insights while addressing real-world business and media analysis questions.
 
-## 📰 Question 1 – Media Article Collection
-Question Overview
-- For this question, I selected a single news topic covered within the last three months and scraped 10 total articles—7 from U.S.-based media channels and 3 from international outlets. Each article included the title, author(s), publication date, and full text. Non-coding scraping tools were primarily used, with Yahoo permitted as one optional coding-based source.]
+## Media Article Collection
+Task Overview
+- For this question, I selected a single news topic covered within the last three months and scraped 10 total articles—7 from U.S.-based media channels and 3 from international outlets. Each article included the title, author(s), publication date, and full text. Non-coding scraping tools were primarily used, with Yahoo permitted as one optional coding-based source.
 
 <b> Part 1 - International Media Data Aggregation (CSV Processing) </b>
 
@@ -74,9 +74,9 @@ print("done")
 - Prepared clean, structured datasets that serve as the foundation for text preprocessing, n-gram analysis, and visualization tasks in later questions.
 
 
-## 📈 Question 2 – Unigram Histograms (U.S. vs International Media)
+## Unigram Histograms (U.S. vs International Media)
 
-Question Overview
+Task Overview
 - Using Python, I processed article text to calculate and visualize the top 10 unigrams for both U.S.-based and international news sources. Histograms were created to compare word frequency distributions between the two groups.
 
 <b> Part 1 - U.S. Media Text Preprocessing & Tokenization (NLP Preparation) </b>
@@ -183,7 +183,7 @@ text_tokens_without_stopwords = [word for word in text_tokens if not word in sto
 print(text_tokens_without_stopwords)
 ```
 
-<b> Part 3 - U.S. Media N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
+<b> U.S. Media N-Gram Frequency Analysis (Top Unigrams, Bigrams, Trigrams) </b>
 
 Code Overview:
 - This code performs n-gram analysis on U.S.-based news article text stored in us_data.csv. After loading the dataset with Pandas, the program cleans and normalizes the text by lowercasing, removing URLs and unwanted characters, and filtering out stopwords using NLTK. The cleaned text is then tokenized, and unigrams, bigrams, and trigrams are generated using nltk.util.ngrams. Finally, the code uses Counter to calculate frequency counts and prints the top 10 most common unigrams, bigrams, and trigrams.
@@ -586,8 +586,8 @@ This understanding helps explain why word frequency results may change depending
 <ins> Interpretation and Communication of Findings: </ins>
 - Built the ability to explain how phrase-level trends relate and differ across datasets (U.S. vs international) and communicate those insights clearly using both printed frequency results and histograms.
 
-## 🔗 Question 3 – Bigram & Trigram Analysis
-Question Overview
+## Bigram & Trigram Analysis
+Task Overview
 - This section expanded the analysis to include bigrams and trigrams, visualized through histograms for both U.S. and international sources. Additionally, stemming and lemmatization techniques were compared to evaluate their impact on text patterns.
 
 <b> Part 1 - International Media Text Cleaning & Token Extraction </b>
@@ -1258,10 +1258,10 @@ print(mostcommontrigrams.most_common(10))
 - Strengthened the ability to explain how preprocessing choices influence results, supporting clear verbal and written interpretation in both the assignment report and video presentation.
 
 
-## 🌍 Question 4 – Non-English NLP with NLTK (GenAI-Permitted)
+## Non-English NLP with NLTK (GenAI-Permitted)
 
-Question Overview
-- For this GenAI-permitted question, I installed an NLTK language package for a non-English language and analyzed a foreign-language article scraped using non-coding methods. Histograms for unigrams, bigrams, and trigrams were generated and compared to English-language results from earlier questions.
+Task Overview
+- For this GenAI-permitted task, I installed an NLTK language package for a non-English language and analyzed a foreign-language article scraped using non-coding methods. Histograms for unigrams, bigrams, and trigrams were generated and compared to English-language results from earlier questions.
 
 <b> Part 1 - Non-English NLP (Spanish) Unigram/Bigram/Trigram Histograms </b>
 
@@ -1348,10 +1348,10 @@ plot_top(top10_tri, "Top 10 Trigrams — Spanish","Q4_spanish_trigrams.png")
 <ins>Reusable Plotting Function Design:</ins>
 - Built a flexible plotting function (plot_top) that can visualize different n-gram types by reusing the same logic, supporting clean and maintainable code.
 
-## 📧 Question 5 – Email Spam Detection Analysis
+## Email Spam Detection Analysis
 
-Question Overview
-- In this question, I analyzed 20 spam emails by extracting and processing both the subject lines and body text. Top unigrams, bigrams, and trigrams were calculated to identify common linguistic patterns associated with spam content.
+Task Overview
+- In this task, I analyzed 20 spam emails by extracting and processing both the subject lines and body text. Top unigrams, bigrams, and trigrams were calculated to identify common linguistic patterns associated with spam content.
 
 <b> Part 1 - Spam Email Text Cleaning & Tokenization (NLP Preparation) </b>
 
