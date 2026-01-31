@@ -1,4 +1,4 @@
-# 📊 Python – Text Analytics & Media Analysis 
+# 🐍 Python – Text Analytics & Media Analysis 
 
 ## Description
 - In this assignment, I applied Python and text analytics techniques to analyze media content across U.S. and international news sources. The project focused on data collection, natural language processing (NLP), and visualization using histograms to uncover patterns in word usage. Through hands-on implementation, I strengthened my ability to transform unstructured text data into meaningful insights while addressing real-world business and media analysis questions.
